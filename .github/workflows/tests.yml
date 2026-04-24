@@ -1,0 +1,64 @@
+name: tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  unit:
+    name: unit (sql parse + formatter)
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.11", "3.12", "3.13"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: pip
+      - run: pip install -r requirements-dev.txt
+      - run: pytest tests/ -v
+
+  integration:
+    name: integration (real Postgres 16)
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_PASSWORD: playbook
+          POSTGRES_DB: playbook
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - run: pip install -r requirements-dev.txt
+      - name: Seed minimal fixture data
+        run: |
+          psql "postgresql://postgres:playbook@localhost:5432/playbook" <<'SQL'
+            CREATE TABLE demo_users (id bigserial PRIMARY KEY, email text UNIQUE, created_at timestamptz DEFAULT now());
+            INSERT INTO demo_users(email) SELECT 'user_' || g || '@example.com' FROM generate_series(1, 2000) g;
+            CREATE INDEX demo_users_created_idx ON demo_users(created_at);
+            ANALYZE;
+          SQL
+      - name: Run the playbook against live Postgres
+        run: |
+          python -m playbook.runner \
+            --dsn "postgresql://postgres:playbook@localhost:5432/playbook" \
+            --out out/ci-report.md
+          test -s out/ci-report.md
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ci-report
+          path: out/ci-report.md
