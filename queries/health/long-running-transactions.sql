@@ -11,7 +11,7 @@
 --                     commit/rollback in app code, or held by an
 --                     interactive psql session)
 --
--- The 'idle in transaction' rows are the dangerous ones — they hold
+-- The 'idle in transaction' rows are the dangerous ones -- they hold
 -- locks and prevent vacuum from cleaning rows that other sessions
 -- have already deleted, so dead_tup grows even if nothing visible
 -- is happening.

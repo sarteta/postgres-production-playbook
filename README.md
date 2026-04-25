@@ -10,7 +10,7 @@ wrong in production, plus a Python runner that executes them all against
 a live DB and aggregates the output into one Markdown report.
 
 Read-only. Every query is a `SELECT` against `pg_stat_*` / `pg_catalog`.
-The test suite enforces that — no `DROP`, `DELETE`, `ALTER`, or anything
+The test suite enforces that -- no `DROP`, `DELETE`, `ALTER`, or anything
 that could touch your data can slip into a contribution.
 
 ## When I use this
@@ -53,7 +53,7 @@ queries/
 
 Every `.sql` file opens with a comment block explaining **what it does,
 when to use it, and what the output means**. That's enforced by a unit
-test — if you add a query without documentation, CI fails.
+test -- if you add a query without documentation, CI fails.
 
 ## Running it
 
@@ -105,11 +105,11 @@ works everywhere.
 
 ## Tests
 
-- `test_discovery.py` — every `.sql` file is discovered, non-empty, and
+- `test_discovery.py` -- every `.sql` file is discovered, non-empty, and
   starts with a `-- ...` documentation comment.
-- `test_sql_syntax.py` — every file parses via sqlparse into exactly
+- `test_sql_syntax.py` -- every file parses via sqlparse into exactly
   one executable statement + no destructive keywords.
-- `test_formatting.py` — the markdown report redacts DSN passwords,
+- `test_formatting.py` -- the markdown report redacts DSN passwords,
   escapes pipes, truncates long result sets, and renders errors
   cleanly.
 

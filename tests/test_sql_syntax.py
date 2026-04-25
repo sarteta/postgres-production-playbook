@@ -1,5 +1,5 @@
-"""Parse every .sql file with sqlparse. This is a weak syntax check —
-sqlparse is a tokenizer, not a validator — but it catches obvious
+"""Parse every .sql file with sqlparse. This is a weak syntax check --
+sqlparse is a tokenizer, not a validator -- but it catches obvious
 typos and unbalanced parentheses without requiring a live Postgres
 connection.
 
@@ -37,8 +37,8 @@ def test_no_obviously_destructive_keywords():
         tokens = {t.value.upper() for t in sqlparse.parse(q.sql)[0].flatten() if t.ttype is not None}
         intersection = tokens & banned
         # Allow them only in comment-level prose, not as actual DML keywords.
-        # We detect them via token ttype — comment tokens have ttype =
-        # Token.Comment*, not Token.Keyword — so this is a robust check.
+        # We detect them via token ttype -- comment tokens have ttype =
+        # Token.Comment*, not Token.Keyword -- so this is a robust check.
         assert not intersection, f"{q.path.name} contains banned keywords: {intersection}"
 
 

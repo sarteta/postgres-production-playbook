@@ -1,4 +1,4 @@
--- Bloat estimate per table. Approximate — reflects HOT updates,
+-- Bloat estimate per table. Approximate -- reflects HOT updates,
 -- dead tuples not yet vacuumed, and fillfactor decisions.
 --
 -- This is a well-known community query (original attribution:

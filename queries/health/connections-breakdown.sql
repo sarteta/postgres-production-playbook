@@ -4,7 +4,7 @@
 --
 -- Anti-patterns to look for:
 --   * A single application_name with > 50 idle connections (missing
---     connection pooler — PgBouncer transaction mode fixes this).
+--     connection pooler -- PgBouncer transaction mode fixes this).
 --   * `idle in transaction` entries older than a few minutes
 --     (long transactions block vacuum and bloat tables fast).
 

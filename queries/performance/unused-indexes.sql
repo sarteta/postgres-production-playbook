@@ -5,7 +5,7 @@
 -- Caveats before dropping anything:
 --   1. pg_stat_reset() clears idx_scan. If stats were reset recently
 --      (check pg_stat_database.stats_reset) this list is unreliable.
---   2. Primary keys + unique constraints show here too — DO NOT drop
+--   2. Primary keys + unique constraints show here too -- DO NOT drop
 --      those. The filter below excludes UNIQUE indexes; add filters
 --      for your specific naming conventions if needed.
 --   3. Indexes used only during nightly ETL or monthly reports can

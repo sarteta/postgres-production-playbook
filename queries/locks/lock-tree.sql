@@ -1,4 +1,4 @@
--- Who is blocking whom — full wait tree.
+-- Who is blocking whom -- full wait tree.
 -- When the app hangs on a random request and the DB looks fine at
 -- first glance, this is the first thing to run.
 --

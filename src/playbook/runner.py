@@ -78,7 +78,7 @@ def run_all(dsn: str, queries: Iterable[Query]) -> list[Result]:
 def format_markdown(results: list[Result], dsn_redacted: str = "***") -> str:
     now = dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%d %H:%M:%S UTC")
     out: list[str] = []
-    out.append(f"# Postgres production playbook — report\n")
+    out.append(f"# Postgres production playbook -- report\n")
     out.append(f"- Generated: `{now}`")
     out.append(f"- Target DSN: `{dsn_redacted}`")
     out.append(f"- Queries run: {len(results)}")

@@ -1,7 +1,7 @@
 -- Autovacuum status per table. Identifies tables that vacuum hasn't
 -- visited in a while or that have a growing dead tuple count.
 --
--- The thresholds are intentionally conservative — if a table shows
+-- The thresholds are intentionally conservative -- if a table shows
 -- up here it doesn't mean there's a problem, just that it's worth
 -- a look.
 

@@ -1,4 +1,4 @@
-# Postgres production playbook — report
+# Postgres production playbook -- report
 
 - Generated: `2026-04-24 17:15:00 UTC`
 - Target DSN: `postgresql://postgres:***@localhost:5432/playbook`
