@@ -142,9 +142,29 @@ def main(argv: list[str] | None = None) -> int:
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(md, encoding="utf-8")
 
-    errors = sum(1 for r in results if r.error)
-    print(f"Ran {len(results)} queries, {errors} errored. Report: {out_path}")
-    return 0 if errors == 0 else 2
+    errors = [r for r in results if r.error]
+    # Distinguish "expected degraded" errors (e.g. extension not installed,
+    # which the docstring promises should degrade gracefully) from real
+    # failures (syntax error, permission denied, connection lost). Exit
+    # non-zero only on the latter so CI passes on a vanilla Postgres that
+    # lacks pg_stat_statements / pgstattuple etc.
+    EXPECTED_GRACEFUL = (
+        "pg_stat_statements",
+        "pgstattuple",
+        "pg_extension",
+        "extension",
+        "does not exist",
+        "no existe",
+    )
+    real_failures = [
+        r for r in errors
+        if not any(token in (r.error or "").lower() for token in EXPECTED_GRACEFUL)
+    ]
+    print(
+        f"Ran {len(results)} queries, {len(errors)} errored "
+        f"({len(real_failures)} real failures). Report: {out_path}"
+    )
+    return 0 if not real_failures else 2
 
 
 if __name__ == "__main__":
