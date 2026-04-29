@@ -53,6 +53,8 @@ jobs:
             ANALYZE;
           SQL
       - name: Run the playbook against live Postgres
+        env:
+          PYTHONPATH: src
         run: |
           python -m playbook.runner \
             --dsn "postgresql://postgres:playbook@localhost:5432/playbook" \
