@@ -1,6 +1,7 @@
 # postgres-production-playbook
 
 [![tests](https://github.com/sarteta/postgres-production-playbook/actions/workflows/tests.yml/badge.svg)](https://github.com/sarteta/postgres-production-playbook/actions/workflows/tests.yml)
+[![docker](https://github.com/sarteta/postgres-production-playbook/actions/workflows/docker.yml/badge.svg)](https://github.com/sarteta/postgres-production-playbook/actions/workflows/docker.yml)
 [![python](https://img.shields.io/badge/python-3.11%20%7C%203.12%20%7C%203.13-blue)](https://www.python.org)
 [![postgres](https://img.shields.io/badge/postgres-13%20%7C%2014%20%7C%2015%20%7C%2016-blue)](https://www.postgresql.org)
 [![license](https://img.shields.io/badge/license-MIT-green)](./LICENSE)
